@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: #121212; 
+            color: #e0e0e0; 
+        }
+        .navbar {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: #1f1f1f; 
+        }
+        nav ul {
+            display: inline-block;
+            list-style-type: none;
+        }
+        nav ul li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+        a {
+            text-decoration: none;
+            color: #e0e0e0; 
+        }
+        .container {
+            width: 1300px;
+            padding-left: 25px;
+            padding-right: 25px;
+            margin: auto;
+        }
+        .title {
+            text-align: center;
+            margin: 0 auto 80px;
+            position: relative;
+            line-height: 60px;
+            color: #ff8c00; /* Accent color */
+        }
+        .title::after {
+            content: "";
+            background: #ff8c00;
+            width: 80px;
+            height: 5px;
+            border-radius: 5px;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Payment Form Styles */
+        .payment-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #1f1f1f; /* Dark background for form */
+            border-radius: 10px;
+        }
+
+        .payment-methods {
+            margin-top: 20px;
+        }
+
+        .payment-methods label {
+            display: block;
+            padding: 10px;
+            background-color: #333;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .payment-methods input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .payment-methods label:hover {
+            background-color: #444;
+        }
+
+        .btn-submit {
+            margin-top: 20px;
+            padding: 12px;
+            background-color: #ff523b;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            background-color: #ff8c00;
+        }
+
+        .credit-card-details, .debit-card-details, .upi-details {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .credit-card-details input, .debit-card-details input, .upi-details input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #333;
+            border: none;
+            color: #fff;
+            border-radius: 5px;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: #1f1f1f; /* Dark footer */
+            color: #8a8a8a;
+            font-size: 14px;
+            padding: 60px 0 20px;
+        }
+        .footer p {
+            color: #8a8a8a;
+        }
+        .footer h3 {
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        .footer-col-1,
+        .footer-col-2,
+        .footer-col-3,
+        .footer-col-4 {
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+        .footer-col-1 {
+            flex-basis: 30%;
+        }
+        .footer-col-2 {
+            flex: 1;
+            text-align: center;
+        }
+        .footer-col-2 img {
+            width: 90px;
+            margin-bottom: 20px;
+        }
+        .footer-col-3,
+        .footer-col-4 {
+            flex-basis: 12%;
+            text-align: center;
+        }
+        ul {
+            list-style-type: none;
+        }
+
+        /* Responsive Styles */
+        @media only screen and (max-width: 800px) {
+            nav ul {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                background: #333;
+                width: 100%;
+            }
+            nav ul li {
+                display: block;
+                margin-right: 50px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                overflow: hidden;
+                transition: max-height 0.5s;
+            }
+            nav ul li a {
+                color: #fff;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shirts.html">Shirts</a></li>
+                <li><a href="tshirts.html">T-Shirts</a></li>
+                <li><a href="trackpants.html">Trackpants</a></li>
+                <li><a href="shoes.html">Shoes</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Payment Section -->
+    <div class="payment-container">
+        <h2 class="title">Payment Options</h2>
+
+        <form action="process_payment.php" method="POST">
+            <div class="payment-methods">
+                <!-- Credit Card Option -->
+                <label for="credit-card">
+                    <input type="radio" name="payment-method" id="credit-card" value="credit-card" required>
+                    Credit Card
+                </label>
+                <div class="credit-card-details">
+                    <input type="text" placeholder="Card Number" name="card-number" required>
+                    <input type="text" placeholder="Cardholder Name" name="cardholder-name" required>
+                    <input type="text" placeholder="Expiration Date (MM/YY)" name="expiration-date" required>
+                    <input type="text" placeholder="CVV" name="cvv" required>
+                </div>
+
+                <!-- Debit Card Option -->
+                <label for="debit-card">
+                    <input type="radio" name="payment-method" id="debit-card" value="debit-card" required>
+                    Debit Card
+                </label>
+                <div class="debit-card-details">
+                    <input type="text" placeholder="Card Number" name="card-number" required>
+                    <input type="text" placeholder="Cardholder Name" name="cardholder-name" required>
+                    <input type="text" placeholder="Expiration Date (MM/YY)" name="expiration-date" required>
+                    <input type="text" placeholder="CVV" name="cvv" required>
+                </div>
+
+                <!-- UPI Option -->
+                <label for="upi">
+                    <input type="radio" name="payment-method" id="upi" value="upi" required>
+                    UPI
+                </label>
+                <div class="upi-details">
+                    <input type="text" placeholder="Enter UPI ID" name="upi-id" required>
+                </div>
+
+                <!-- Cash on Delivery Option -->
+                <label for="cod">
+                    <input type="radio" name="payment-method" id="cod" value="cod" required>
+                    Cash on Delivery
+                </label>
+            </div>
+
+            <button type="submit" class="btn-submit">Submit Payment</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="small-containers">
+            <div class="row">
+                <div class="footer-col-1">
+                    <h3>Download Our App</h3>
+                    <p>Download App for Android and iOS mobile phones.</p>
+                </div>
+                <div class="footer-col-2">
+                    <img src="images/ct.jpeg" alt="Logo">
+                    <p>Our purpose is to provide quality clothing for everyone.</p>
+                </div>
+                <div class="footer-col-3">
+                    <h3>Useful Links</h3>
+                    <ul>
+                        <li>Coupons</li>
+                        <li>Blog</li>
+                        <li>Return Policy</li>
+                        <li>Join Affiliate</li>
+                    </ul>
+                </div>
+                <div class="footer-col-4">
+                    <h3>Follow Us</h3>
+                    <ul>
+                        <li>Facebook</li>
+                        <li>Twitter</li>
+                        <li>Instagram</li>
+                        <li>YouTube</li>
+                    </ul>
+                </div>
+            </div>
+       
